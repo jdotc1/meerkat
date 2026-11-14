@@ -62,7 +62,8 @@ fn validate_string_literal(s: &str) -> Result<()> {
 /// #39: validate the length-bounded string fields of a `ServiceCodeRequest`
 /// arriving over the wire. `path` and `reply_to` are a resource path and a
 /// network address, not identifiers, so they are length-checked but not
-/// charset-validated or interned. The source in the response is unbounded.
+/// charset-validated or interned. The response source is limited to
+/// `MAX_NET_REQUEST_SOURCE_LENGTH` bytes by `read_served_source`.
 pub fn validate_service_code_request(path: &str, reply_to: &str) -> Result<()> {
     for (field, value) in [("path", path), ("reply_to", reply_to)] {
         if value.len() > MAX_NET_REQUEST_STRING_LENGTH {
