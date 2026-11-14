@@ -60,6 +60,12 @@ pub const IMPORT_POLL_INTERVAL_MS: u64 = 10;
 /// Maximum length of source code received over network in bytes
 pub const MAX_NET_REQUEST_SOURCE_LENGTH: usize = 1_048_576;
 
+/// Maximum serialized JSON payload per network frame. This accommodates a
+/// 1-MiB service source (including JSON escaping), and the largest supported
+/// clock/source-pair collections with their identifier encoding overhead.
+/// The limit is checked before allocating the incoming transport buffer.
+pub const MAX_NET_MESSAGE_LENGTH: usize = 16 * 1024 * 1024;
+
 /// Maximum number of source-identity pairs accepted from a network message.
 /// Two 64-byte identifiers per pair allow at most 1 MiB of identifier bytes.
 pub const MAX_NET_SOURCE_PAIRS: usize = 8192;
